@@ -1,0 +1,41 @@
+{
+  "type": "record",
+  "name": "Order",
+  "namespace": "com.gauravcoding.dto",
+  "fields": [
+    {
+      "name": "instrumentId",
+      "type": "string"
+    },
+    {
+      "name": "orderType",
+      "type": {
+        "type": "enum",
+        "name": "OrderType",
+        "namespace": "com.gauravcoding.dto",
+        "symbols": [
+          "BUY",
+          "SELL"
+        ]
+      }
+    },
+    {
+      "name": "price",
+      "type": "long"
+    },
+    {
+      "name": "quantity",
+      "type": "long"
+    },
+    {
+      "name": "timestamp",
+      "type": "long",
+      "default": 0
+    },
+    {
+      "name": "instrumentDescription",
+      "type": "string",
+      "default": ""
+    }
+  ]
+}
