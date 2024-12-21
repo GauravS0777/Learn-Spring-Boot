@@ -16,22 +16,19 @@ public class MainServiceTest {
 
 
     AtomicBoolean isFlag = new AtomicBoolean(false);
+    AtomicBoolean isBroken = new AtomicBoolean(false);
 
-    MainService mainService = spy(new MainService(isFlag));
-
-    ExecutorService executor = Executors.newSingleThreadExecutor();
-    Future<Boolean> consumerFuture =
-        executor.submit(
-            () -> {
-              mainService.startConsumer();
-              return true;
-            });
+    MainService mainService = spy(new MainService(isFlag, isBroken));
+    mainService.startConsumer();
 
     // Call the startConsumer method
 
     while (isFlag.get() != true) {
       System.out.println(Thread.currentThread().getName() + " waiting for isFalg to true...");
       Thread.sleep(1000);
+      if(isBroken.get()){
+        mainService.restartConsumer();
+      }
     }
 
     // Verify that restartConsumer was called due to the connection error
